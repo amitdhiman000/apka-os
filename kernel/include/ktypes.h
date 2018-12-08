@@ -1,33 +1,40 @@
 #ifndef __KTYPES_H__
 #define __KTYPES_H__
 
-typedef signed char __int8;
-typedef unsigned char __uint8;
+#if __x86_64__
 
-typedef signed short int __int16;
-typedef unsigned short int __uint16;
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef unsigned char byte_t;
 
-typedef signed int __int32;
-typedef unsigned int __uint32;
+typedef signed short int int16_t;
+typedef unsigned short int uint16_t;
 
-typedef signed long int __int64;
-typedef unsigned long int __uint64;
+typedef signed int int32_t;
+typedef unsigned int uint32_t;
 
+typedef signed long int int64_t;
+typedef unsigned long int uint64_t;
 
-typedef char* string;
+typedef void* pointer_t;
 
-typedef struct {
-	__int32 X,Y;
-}point;
+#else /* __x86_64__ */
 
-typedef struct {
-	__uint32 X,Y;
-}upoint;
+typedef signed char int8_t;
+typedef unsigned char uint8_t;
+typedef unsigned char byte_t;
 
+typedef signed short int int16_t;
+typedef unsigned short int uint16_t;
 
+typedef signed int int32_t;
+typedef unsigned int uint32_t;
 
+typedef signed long long int int64_t;
+typedef unsigned long long int uint64_t;
 
+typedef void* pointer_t;
 
+#endif /* __x86_64__ */
 
-
-#endif
+#endif /* __KTYPES_H__ */

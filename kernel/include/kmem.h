@@ -3,10 +3,10 @@
 
 #include <ktypes.h>
 
-extern void *memcpy(void *dest, const void *src, __uint32 n);
-extern void *memset(void *s, __uint16 c, __uint32 n);
-extern void *memsetw(void *s, __uint16 c, __uint32 n);
-extern void *memsetdw(void *s, __uint16 c, __uint32 n);
+extern void *memcpy(void *dest, const void *src, uint32_t n);
+extern void *memset(void *dest, uint16_t c, uint32_t n);
+extern void *memsetw(void *dest, uint16_t c, uint32_t n);
+extern void *memsetdw(void *dest, uint16_t c, uint32_t n);
 
 
-#endif
+#endif /* __KMEM_H__ */

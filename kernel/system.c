@@ -1,7 +1,8 @@
+#include <ktypes.h>
 #include <system.h>
 #include <kinterrupts.h>
 
-unsigned short int ocw1 = 0xFFFF;	/* short int = 16 bits */
+uint16_t ocw1 = 0xFFFF;	/* short int = 16 bits */
 
 /**********************
  * PIC operations here
@@ -72,21 +73,24 @@ void disable_irq(int irq)
 						 */
 }
 
-inline void write_nmi(unsigned char nmi)
+void write_nmi(byte_t nmi)
 {
 	out(0x70, nmi);
 	in(0x71);
 }
 
-inline void enable_nmi(void)
+void enable_nmi(void)
 {
 	write_nmi(ENABLE_NMI);
 }
 
-inline void disable_nmi(void)
+void disable_nmi(void)
 {
 	write_nmi(DISABLE_NMI);
 }
+
+
+
 
 /**********************
  * CPU operations here
@@ -95,7 +99,7 @@ inline void disable_nmi(void)
 /* sti() 
  * enable interrupts
  */
-inline void sti(void)
+void sti(void)
 {
 	__asm__("sti");
 }
@@ -103,7 +107,7 @@ inline void sti(void)
 /* cli()
  * disable interrupts
  */
-inline void cli(void)
+void cli(void)
 {
 	__asm__("cli");
 }
@@ -111,12 +115,12 @@ inline void cli(void)
 /* hlt()
  * halts the CPU
  */
-inline void hlt(void)
+void hlt(void)
 {
 	__asm__("hlt");
 }
 
-inline void save(void)
+void save(void)
 {
 	/* don't have anything here yet */
 	/* Use to save Data when we are shutting down the system */
@@ -144,7 +148,7 @@ void halt(void)
  */
 void reboot(void)
 {
-	unsigned char temp;
+	byte_t temp;
 
 	cli();
 	save();
@@ -157,10 +161,10 @@ void reboot(void)
 			(void) in(0x60);
 			continue;
 		}
-	}while(temp & 2);
+	} while(temp & 2);
 
 	/* send the CPU reset line */
 	out(0x64, 0xFE);
-	
+
 	hlt();
 }

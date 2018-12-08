@@ -5,25 +5,24 @@ addr = 0x100000;
 
 SECTIONS
 {
-
-	.text addr:
+	.text addr :
 		ALIGN(0x1000)
 		{
-			*(.text*);
-			*(.rodata*);
+			*(.text);
+			*(.rodata);
 		}
-	.data:
+		
+	.data :
 		ALIGN(0x1000)
 		{
-			*(.data*);
+			*(.data);
 		}
-	.bss:
+		
+	.bss :
 		ALIGN(0x1000)
 		{	
-			*(.bss*);
+			*(.bss);
 		}
-
-
 }
 
 

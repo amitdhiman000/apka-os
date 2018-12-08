@@ -1,7 +1,0 @@
-#include <consol.h>
-
-void kmain(void *MultibootStructure)
-{
-	ConsolClear();
-	ConsolWriteStringColored("No Roads Left...",White);
-}

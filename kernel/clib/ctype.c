@@ -23,21 +23,17 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include<ctype.h>
+#include <ctype.h>
 
 /* Is c a digit? */
 int isdigit(int c) {
-  if (c >= 48 && c <= 57)
-    return 1;
-  return 0;
+	return (c >= '0' && c <= '9');
 }
 
 /* Is c a letter? */
 int isalpha(int c)
 {
-  if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122 ))
-    return 1;
-  return 0;
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z' ));
 }
 
 /* Is c a letter or a digit? */
@@ -49,39 +45,35 @@ int isalnum(int c)
 /* Is c an hexadecimal digit? */
 int isxdigit(int c)
 {
-  if (isdigit(c) || (c >= 65 && c <= 70 ))
-    return 1;
-  return 0;
+	return (isdigit(c) || (c >= 'A' && c <= 'F' ));
 }
 
 /* Is c a lowercase letter? */
 int islower(int c)
 {
-  if (c >= 97 && c <= 122)
-    return 1;
-  return 0;
+	return (c >= 'a' && c <= 'z');
 }
 
 /* Is c an uppercase letter? */
 int isupper(int c)
 {
-  if (c >= 65 && c <= 90)
-    return 1;
-  return 0;
+	return (c >= 'A' && c <= 'Z');
 }
 
 /* Convert c to a lowercase char */
 int tolower(int c)
 {
-  if (isalpha(c) == 0 || islower(c))
-    return c;
-  else return c + OFFSET;
+	if (isalpha(c) == 0 || islower(c))
+		return c;
+	else
+		return c + OFFSET;
 }
 
 /* Convert c to an uppercase char */
 int toupper(int c)
 {
-  if (isalpha(c) == 0 || isupper(c))
-    return c;
-  else return c - OFFSET;
+	if (isalpha(c) == 0 || isupper(c))
+		return c;
+	else
+	return c - OFFSET;
 }

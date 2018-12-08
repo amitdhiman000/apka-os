@@ -3,10 +3,10 @@
 /* itoa()
  * convert an integer into a string
  */
-void itoa(__uint64 n, __uint8 *s, char base)
+void itoa(__uint64 n, uint8_t *s, char base)
 {
-	__uint32 i, j,k;
-	__int8 tmp[20], digit;
+	uint32_t i, j,k;
+	int8_t tmp[20], digit;
 
 	i = 0;
 	do
@@ -49,9 +49,9 @@ void itoa(__uint64 n, __uint8 *s, char base)
 /* strlen() 
  * returns length of a string
  */
-__uint32 strlen(const char *s)
+uint32_t strlen(const char *s)
 {
-	__uint32 i=0;
+	uint32_t i=0;
 	while (*(s++) != '\0')
 		i++;
 	return i;
@@ -60,7 +60,7 @@ __uint32 strlen(const char *s)
 /* strncmp()
  * compares first n characters of two strings 
  */
-__uint16 strncmp(const char *s1, const char *s2, __uint32 n)
+uint16_t strncmp(const char *s1, const char *s2, uint32_t n)
 {
 	int i = 1;
 
@@ -73,7 +73,7 @@ __uint16 strncmp(const char *s1, const char *s2, __uint32 n)
 /* strcmp() 
  * compares two strings 
  */
-__uint16 strcmp(const char *s1, const char *s2)
+uint16_t strcmp(const char *s1, const char *s2)
 {
 	for (; *s1 == *s2; s1++, s2++)
 		if (*s1 == '\0')
@@ -101,7 +101,7 @@ char *strcat(char *dest, const char *src)
 /* strncat() 
  * adds n characters of src to dest 
  */
-char *strncat(char *dest, const char *src, __uint32 n)
+char *strncat(char *dest, const char *src, uint32_t n)
 {
 	char *s = dest;
 	
@@ -128,7 +128,7 @@ char *strcpy(char *dest, const char *src)
 /* strncpy()
  * copies n characters of src to dest
  */
-char *strncpy(char *dest, const char *src, __uint32 n)
+char *strncpy(char *dest, const char *src, uint32_t n)
 {
 	const char *s = src;
 	char *d = dest;

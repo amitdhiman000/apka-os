@@ -23,23 +23,31 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _STRING_H
-#define _STRING_H
+#ifndef __STRING_H__
+#define __STRING_H__
 
 #include <stddef.h>
 
 int _kstrncmp (const char *, const char *, int);
-extern void * memmove(void *,const void *,size_t);
+
+extern void * memmove(void *, const void *, size_t);
+
 size_t strlen (const char *);
 
 int strcmp (const char *, const char *);
+
 int  strncmp (const char *, const char *, int);
+
 char *strchr (register const char *, register int);
+
 char *strstr (const char *, const char *);
+
 char *strncat (char *, const char *, size_t);
 
 char *strtok (char *, const char *);
+
 char *strcpy (char *, register const char *);
 
 char *strncpy (char *, register const char *, size_t);
-#endif
+
+#endif /* __STRING_H__ */

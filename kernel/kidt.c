@@ -6,39 +6,39 @@
 *  will cause an "Unhandled Interrupt" exception. Any descriptor
 *  for which the 'presence' bit is cleared (0) will generate an
 *  "Unhandled Interrupt" exception */
-struct idt_entry idt[256];
-struct idt_ptr idtp;
+static idt_entry_t g_idt_table[256];
+idt_ptr_t g_idt_ptr;
 /* Defines an IDT entry */
 
 
 
 /* Use this function to set an entry in the IDT. Alot simpler
 *  than twiddling with the GDT ;) */
-void idt_set_gate(unsigned char num, unsigned long base, unsigned short sel, unsigned char flags)
+void idt_set_gate(byte_t num, pointer_t base, uint16_t sel, byte_t flags)
 {
     /* The interrupt routine's base address */
-    idt[num].base_lo = (base & 0xFFFF);
-    idt[num].base_hi = (base >> 16) & 0xFFFF;
+    uint64_t base_p = (uint64_t)base;
+    g_idt_table[num].base_lo = (base_p & 0xFFFF);
+    g_idt_table[num].base_hi = (base_p >> 16) & 0xFFFF;
 
     /* The segment or 'selector' that this IDT entry will use
     *  is set here, along with any access flags */
-    idt[num].sel = sel;
-    idt[num].always0 = 0;
-    idt[num].flags = flags;
+    g_idt_table[num].sel = sel;
+    g_idt_table[num].always0 = 0;
+    g_idt_table[num].flags = flags;
 }
 
 /* Installs the IDT */
-void idt_install()
+void idt_install(void)
 {
     /* Sets the special IDT pointer up, just like in 'gdt.c' */
-    idtp.limit = (sizeof (struct idt_entry) * 256) - 1;
-    idtp.base = &idt;
+    g_idt_ptr.limit = (sizeof(idt_entry_t) * 256) - 1;
+    g_idt_ptr.base = (uint32_t)&g_idt_table;
 
     /* Clear out the entire IDT, initializing it to zeros */
-    memset(&idt, 0, sizeof(struct idt_entry) * 256);
+    memset(&g_idt_table, 0, sizeof(idt_entry_t) * 256);
 
     /* Add any new ISRs to the IDT here using idt_set_gate */
-
 
 
     /* Points the processor's internal register to the new IDT */

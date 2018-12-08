@@ -31,19 +31,19 @@
  */
 char *strncpy (char *dest, register const char *src, register size_t n)
 {
-  if (n != 0) {
-	char *d = dest;
-	const char *s = src;
-	do {
-		if ((*d++ = *s++) == 0) {
-			while (--n != 0)
-				*d++ = '\0';
-				break;
-			}
-		} while (--n != 0);
-	}
-	return dest;
- }
+    if (n != 0) {
+        char *d = dest;
+        const char *s = src;
+        do {
+            if ((*d++ = *s++) == 0) {
+                while (--n != 0)
+                    *d++ = '\0';
+                break;
+            }
+        } while (--n != 0);
+    }
+    return dest;
+}
 
 char *strcpy (char *dest, const char *src)
 {
@@ -244,11 +244,11 @@ char *strtok(char *s, const char *delim)
  */
 char *strncat (char *dest, const char *src, size_t n)
 {
-    size_t dlen = strlen (dest);
-    int i;	
-    for (i=0; i<n && src[i]; i++)
-	dest[dlen+i] = src[i];
-    dest[dlen+i] = '\0';
+    size_t dlen = strlen(dest);
+    int i;
+    for (i = 0; i < n && src[i]; ++i)
+	dest[dlen + i] = src[i];
+    dest[dlen + i] = '\0';
 
     return dest;
 }

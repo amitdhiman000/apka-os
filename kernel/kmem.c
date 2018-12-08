@@ -8,7 +8,7 @@
 /* memcpy()
  * copies n bytes from src to dest
  */
-void *memcpy(void *dest, const void *src, __uint32 n)
+void *memcpy(void *dest, const void *src, uint32_t n)
 {
 	char *to = (char*) dest, *from = (char*) src;
 
@@ -22,9 +22,9 @@ void *memcpy(void *dest, const void *src, __uint32 n)
  * byte c
  */
 
-void *memset(void *s, __uint16 c, __uint32 n)
+void *memset(void *s, uint16_t c, uint32_t n)
 {
-	__uint8 *to = (__uint8*) s;
+	uint8_t *to = (uint8_t*) s;
 
 	while (n-- > 0)
 		*(to++) = c;
@@ -33,18 +33,18 @@ void *memset(void *s, __uint16 c, __uint32 n)
 
 
 
-void *memsetw(void *s, __uint16 c, __uint32 n)
+void *memsetw(void *s, uint16_t c, uint32_t n)
 {
-	__uint16 *to = (__uint16*) s;
+	uint16_t *to = (uint16_t*) s;
 
 	while (n-- > 0)
 		*(to++) = c;
 	return s;
 }
 
-void *memsetdw(void *s, __uint16 c, __uint32 n)
+void *memsetdw(void *s, uint16_t c, uint32_t n)
 {
-	__uint32 *to = (__uint32*) s;
+	uint32_t *to = (uint32_t*) s;
 
 	while (n-- > 0)
 		*(to++) = c;

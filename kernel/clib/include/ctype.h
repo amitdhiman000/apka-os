@@ -21,21 +21,21 @@
  * Data: 26 gennaio 2006
  */
 
-#ifndef __CTYPE_H
-#define __CTYPE_H
+#ifndef __CTYPE_H__
+#define __CTYPE_H__
 
 #define OFFSET 32 /* Distance from a uppercase character to the correspondent lowercase in ASCII */
 
-int isdigit(int c);
-int isalpha(int c);
-int isalnum(int c);
-int isxdigit(int c);
-int islower(int c);
-int isupper(int c);
-int tolower(int c);
-int toupper(int c);
-int isspace(int c);
-int iscntrl(int c);
-int ispunct(int c);
+extern int isdigit(int c);
+extern int isalpha(int c);
+extern int isalnum(int c);
+extern int isxdigit(int c);
+extern int islower(int c);
+extern int isupper(int c);
+extern int isspace(int c);
+extern int iscntrl(int c);
+extern int ispunct(int c);
+extern int tolower(int c);
+extern int toupper(int c);
 
-#endif
+#endif /* __CTYPE_H__ */

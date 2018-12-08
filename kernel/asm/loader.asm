@@ -3,6 +3,9 @@ bits 32
 global loader
 extern kmain
 
+section .__mbHeader
+align 0x4
+
 ;multiboot header
 MODULEALIGN equ 1<<0
 MEMINFO     equ 1<<1
@@ -10,12 +13,14 @@ FLAGS       equ MODULEALIGN | MEMINFO
 MAGIC       equ 0x1BADB002
 CHECKSUM    equ -(MAGIC + FLAGS)
 
-MultibootHeader:
 
+MultibootHeader:
 	dd MAGIC
 	dd FLAGS
 	dd CHECKSUM
 
+
+section .text
 
 STACKSIZE equ 0X4000   ;16 KB
 
@@ -40,6 +45,5 @@ call kmain
 align 4
 stack:
 	TIMES STACKSIZE db 0
-	
 
 

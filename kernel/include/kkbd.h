@@ -1,10 +1,9 @@
 #ifndef __KKBD_H__
 #define __KKBD_H__
 
-#include <kirq.h>
-#include <kconsol.h>
+#include <ktypes.h>
 
-extern void keyboard_install();
-extern unsigned char _kgetch();
+extern void keyboard_install(void);
+extern const byte_t kgetch(void);
 
 #endif

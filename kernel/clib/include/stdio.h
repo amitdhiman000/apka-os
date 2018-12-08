@@ -23,10 +23,14 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef _STDIO_H
-#define _STDIO_H
+#ifndef __STDIO_H__
+#define __STDIO_H__
 
 #define MAX_DIGITS_IN_INTEGER 11
+
+#ifndef NULL
+#define NULL void*(0)
+#endif
 
 #ifndef EOF
 #define EOF (-1)
@@ -34,17 +38,12 @@
 
 
 
-void putchar (char ch);
-int atoi (const char *);
-int printf (const char *, ...);
-int puts (char *s);
-int scanf (const char *, ...);
-char *gets ();
+extern void putchar(const char ch);
+extern int atoi(const char * const str);
+extern char *gets(void);
+extern int puts(const char * const str);
+extern int printf(const char * const fmt, ...);
+extern int scanf(const char * const fmt, ...);
 
-/*********  Helper Functions **********/
 
-void kntos(char *buffer,unsigned int num, int base);
-void kntohex (unsigned int number);
-void kdecbin (int n);
-
-#endif
+#endif /* __STDIO_H__ */

@@ -11,9 +11,9 @@ start:
 ; far jump. A jump that includes a segment as well as an offset.
 ; This is declared in C as 'extern void gdt_flush();'
 global gdt_flush
-extern gp
+extern g_gdt_ptr
 gdt_flush:
-    lgdt [gp]
+    lgdt [g_gdt_ptr]
     mov ax, 0x10
     mov ds, ax
     mov es, ax
@@ -27,9 +27,9 @@ flush2:
 ; Loads the IDT defined in 'idtp' into the processor.
 ; This is declared in C as 'extern void idt_load();'
 global idt_load
-extern idtp
+extern g_idt_ptr
 idt_load:
-    lidt [idtp]
+    lidt [g_idt_ptr]
     ret
 
 ; In just a few pages in this tutorial, we will add our Interrupt

@@ -5,13 +5,13 @@
 
 
 
-extern void itoa(__uint64, __uint8 *, char);
-extern __uint32 strlen(const char *);
-extern __uint16 strcmp(const char *, const char *);
-extern __uint16 strncmp(const char *, const char *, __uint32);
+extern void itoa(__uint64, uint8_t *, char);
+extern uint32_t strlen(const char *);
+extern uint16_t strcmp(const char *, const char *);
+extern uint16_t strncmp(const char *, const char *, uint32_t);
 extern char *strcat(char *, const char *);
-extern char *strncat(char *, const char*, __uint32);
+extern char *strncat(char *, const char*, uint32_t);
 extern char *strcpy(char *, const char *);
-extern char *strncpy(char *, const char*, __uint32);
+extern char *strncpy(char *, const char*, uint32_t);
 
 #endif

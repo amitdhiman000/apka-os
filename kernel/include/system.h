@@ -5,13 +5,13 @@
 #define unlock sti
 
 /* prototypes */
-void enable_nmi(void);
-void disable_nmi(void);
+extern void enable_nmi(void);
+extern void disable_nmi(void);
 
-void cli(void);
-void sti(void);
-void hlt(void);
-void reboot(void);
-void halt(void);
+extern void cli(void);
+extern void sti(void);
+extern void hlt(void);
+extern void reboot(void);
+extern void halt(void);
 
-#endif
+#endif /* __SYSTEM_H__ */
