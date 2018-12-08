@@ -1,0 +1,41 @@
+#ifndef __KCONSOL_H__
+#define __KCONSOL_H__
+
+#include <ktypes.h>
+
+#define ConsolWidth 80
+#define ConsolHeight 25
+#define ConsolDefaultColor 0x7
+
+
+enum colors
+{
+		Black 		= 0x0,
+		Blue 		= 0x1,
+		Green 		= 0x2,
+		Cyan 		= 0x3,
+		Red 		= 0x4,
+		Megenta 	= 0x5,
+		Brown 		= 0x6,
+		LightGray 	= 0x7,
+		DarkGray 	= 0x8,
+		LightBlue 	= 0x9,
+		LightGreen 	= 0xA,
+		LightCyan 	= 0xB,
+		LightRed    = 0xC,
+		LightMagenta= 0xD,
+		Yellow 		= 0xE,
+		White 		= 0xF
+		
+};
+
+
+
+extern void ConsolClear();
+extern void ConsolWriteChar(char c);
+extern void ConsolWriteCharColored(char c,uint8 color);
+extern void ConsolWriteString(string s);
+extern void ConsolWriteStringSolored(string s,uint8 color);
+
+
+#endif

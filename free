@@ -1,0 +1,2 @@
+umount /media/test1
+rm -r /media/test1

@@ -1,0 +1,60 @@
+#include <kconsol.h>
+
+upoint ConsolCursor = {0, 0};
+upoint ConsolSize={ConsolWidth, ConsolHeight};
+
+uint8* VideoRam=(uint8*)VIDEO_RAM;
+
+void ConsolClear()
+{
+	uint32 i;
+	for(i=0;i<ConsolSize.X*ConsolSize.Y*2;i++)
+	{
+		VideoRam[i]=0;
+		}
+	
+	}
+	
+	
+	
+void ConsolWriteChar(char c)
+{
+	ConsolWriteCharColored(c,ConsolDefaultColor);
+	}
+	
+	
+	
+	
+void ConsolWriteCharColored(char c,uint8 color)
+{
+	uint32 location=ConsolCursor.X + ConsolCursor.Y*ConsolSize.X;
+	VideoRam[2*location]=c;
+	VideoRam[2*location +1]=color;
+	
+	// now Incrementing the cursor to next location
+	ConsolCursor.X++;
+	
+		// Checking for Boundary Condition
+		if(ConsolCursor.X>=ConsolSize.X)
+		{
+			ConsolCursor.X=0;
+			ConsolCursor.Y++;
+			}
+	}
+	
+	
+void ConsolWriteString(string s)
+{
+	ConsolWriteStringColored(s,ConsolDefaultColor);
+	}
+	
+	
+void ConsolWriteStringColored(string s,uint8 color)
+{
+	while(*s != 0)
+	{
+		ConsolWriteCharColored(*s,color);
+		s++;
+		}
+	
+	}

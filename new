@@ -1,0 +1,7 @@
+cp boot/os.img  os.img
+#mounting on Floppy image
+mkdir /media/test1
+sudo mount -o loop os.img /media/test1
+cp kernel.bin /media/test1
+sudo umount /media/test1
+rm -r /media/test1
