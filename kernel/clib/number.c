@@ -1,36 +1,65 @@
 #include <number.h>
 
+#include <kconsol.h>
 
 
-void ntobin(char* const out_buffer, int32_t num);
-void ntooct(char* const out_buffer, int32_t num);
-void ntodec(char* const out_buffer, int32_t num);
-void ntohex(char* const out_buffer, int32_t num);
+uint32_t ntobin(char* const out_buffer, uint32_t num);
+uint32_t ntooct(char* const out_buffer, uint32_t num);
+uint32_t ntodec(char* const out_buffer, uint32_t num);
+uint32_t ntohex(char* const out_buffer, uint32_t num);
+
+static char *reverse(char * const str, const size_t len)
+{
+	if (NULL != str && len > 1) {
+        size_t left = 0;
+        size_t right = len - 1;
+		while (left < right) {
+			char tmp = str[left];
+			str[left] = str[right];
+			str[right] = tmp;
+            ++left;
+			--right;
+		}
+	}
+    return str;
+}
+
 
 /**
 * Convert the number "num" into a string
 */
-void ntos(char * const out_buffer, int32_t num, numbers_base_t base)
+uint32_t ntos(char * const out_buffer, int32_t num, numbers_base_t base)
 {
+    uint32_t len = 0;
+    uint32_t sign = 0;
+    char *buffer = out_buffer;
+
+    if (num < 0) {
+        out_buffer[0] = '-';
+        ++buffer;
+        num = -num;
+        sign = 1;
+    }
+
     switch (base) {
         case BINARY:
         {
-            ntobin(out_buffer, num);
+            len = ntobin(buffer, num);
             break;
         }
         case OCTAL:
         {
-            ntooct(out_buffer, num);
+            len = ntooct(buffer, num);
             break;
         }
         case DECIMAL:
         {
-            ntodec(out_buffer, num);
+            len = ntodec(buffer, num);
             break;
         }
         case HEXADECIMAL:
         {
-            ntohex(out_buffer, num);
+            len = ntohex(buffer, num);
             break;
         }
         default:
@@ -38,58 +67,90 @@ void ntos(char * const out_buffer, int32_t num, numbers_base_t base)
             break;
         }
     }
+
+    len += sign;
+    out_buffer[len] = '\0';
+
+    return len;
 }
 
 /**
  * Convert from decimal to binary by saving in an integer array
  */
-void ntobin(char* const out_buffer, int32_t num)
+uint32_t ntobin(char* const out_buffer, uint32_t num)
 {
-    int a = 0;
-    int temp[255];
+    uint32_t i = 0;
+
+    if (0 == num) {
+		out_buffer[0] = '0';
+		return 1;
+	}
+
     do {
-        temp[a++] = num & 0x1;
+        out_buffer[i++] = (num & 0x1) + '0';
         num /= 2;
     } while (num > 0);
 
-    int j = a - 1;
-    /* Reverse the array */
-    for (int b = 0; j >= 0; j--, b++) {
-        out_buffer[b] = temp[j];
-    }
+    reverse(out_buffer, i);
+    return i;
 }
 
 /**
  * Convert a number into an octal string
  */
-void ntooct(char * const out_buffer, int32_t num)
+uint32_t ntooct(char * const out_buffer, uint32_t num)
 {
-    int i = 0; 
+    uint32_t i = 0;
+
+    if (0 == num) {
+		out_buffer[0] = '0';
+		return 1;
+	}
+
     while (num != 0) {
-        out_buffer[i++] = num % 8; 
+        out_buffer[i++] = num % 8 + '0'; 
         num = num / 8;
     }
+
+    reverse(out_buffer, i);
+    return i;
 }
 
 /**
  * Convert a number into an decimal string
  */
-void ntodec(char * const out_buffer, int32_t num)
+uint32_t ntodec(char * const out_buffer, uint32_t num)
 {
-    int i = 0; 
+    uint32_t i = 0;
+
+    if (0 == num) {
+		out_buffer[0] = '0';
+		return 1;
+	}
+
     while (num != 0) {
-        out_buffer[i++] = num % 8; 
+        out_buffer[i++] = num % 10 + '0';
         num = num / 10;
     }
+
+	reverse(out_buffer, i);
+
+    return i;
 }
 
 
 /**
  * Convert a number into an hexadecimal string
  */
-void ntohex(char * const out_buffer, int32_t num)
+uint32_t ntohex(char * const out_buffer, uint32_t num)
 {    
-    int i = 0;
+    uint32_t i = 0;
+
+    if (0 == num) {
+		out_buffer[0] = '0';
+		return 1;
+	}
+
     while (num != 0)
     {
         // temporary variable to store remainder 
@@ -105,6 +166,10 @@ void ntohex(char * const out_buffer, int32_t num)
         }
         num = num / 16; 
     }
+
+    reverse(out_buffer, i);
+
+    return i;
 }
 
 

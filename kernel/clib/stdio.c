@@ -40,7 +40,6 @@
  */
 void putchar (char ch)
 {
-	
 	ConsolWriteChar(ch);
 	/*
    	asm ("movl $0x0, %%eax\n"
@@ -59,32 +58,31 @@ int puts(const char *str)
 /*
  * Convert a string to an integer
  */
-int atoi(const char *nptr)
+int atoi(const char *str)
 {
-	int base = 1;
+	if (!str || !str[0]) {
+		return 0;
+	}
+
+	int sign = 0;
 	int res = 0;
+	if ('-' == str[0]) {
+		sign = 1;
+	}
+
 	int i = 0;
-
 	/* Make sure all chars are numbers */
-	for (i = 0; *(nptr + i); ++i) {
-		if(!isdigit(*(nptr + i)))
-			return -1;
+	for (i = sign; str[i]; ++i) {
+		if(!isdigit(str[i])) {
+			return 0;
+		}
 	}
 
-	i = 0;
-	while(nptr[++i]) {
-		base *= 10;
+	for (i = sign; str[i]; ++i) {
+        res = res*10 + str[i] - '0';
 	}
 
-	/** Actual conversion. It works like this: for example, 123 is obtained with
-	* 1*100 + 2*10 + 3*1
-	*/
-	for (i = 0; *(nptr + i); ++i) {
-		res += ((int)nptr[i] - '0') * base;
-		base /= 10;
-	}
-
-	return res;
+	return (sign == 0)? res : (-res);
 }
 
 const char getchar(void)
@@ -127,10 +125,9 @@ int printf(const char * format, ...)
 	char current[255]; // maybe this size will be changed
 	char *cur_p = &current[0]; // pointer to the previous array
 	int cursize = 0;
-	int ishex = 0;
 
-	short int direction = RIGHT;
-	short int width = 0;
+	byte_t direction = RIGHT;
+	byte_t width = 0;
 	char field[5];
 	int len = 0;
 	int i = 0;
@@ -149,7 +146,7 @@ int printf(const char * format, ...)
 			}
 
 			/* Take field width if present and convert it to an int */
-			if (isdigit(*format) == 1) { // precisione di campo
+			if (isdigit(*format)) { // precisione di campo
 				while (isdigit(*format)) {
 					field[i++] = *format++;
 				}
@@ -157,67 +154,112 @@ int printf(const char * format, ...)
 				width = atoi(field);
 			}
 
-			/* Some data type aren't supported yet
-			* In the future we will fix this */
-			if (*format == 's') {
-				cur_p = va_arg(ap, char *);
-			}
+			/** Some data type aren't supported yet
+			* In the future we will fix this
+			*/
+			switch(*format) {
+				case 's':
+				{
+					char *str = va_arg(ap, char *);
+					int ii = 0;
+					while (str[ii]) {
+						cur_p[ii] = str[ii];
+						++ii;
+					}
+					cur_p[ii] = '\0';
+					break;
+				}
 
-			if (*format == 'd' || *format == 'i') {
-				int varint = va_arg(ap, int);
-				ntos(cur_p, varint, DECIMAL);
-			}
+				case 'c':
+				{
+					char ch = va_arg(ap, char);
+					cur_p[0] = ch;
+					cur_p[1] = '\0';
+					break;
+				}
 
-			if (*format == 'u') {
-				unsigned int uint = va_arg (ap, int);
-				ntos(cur_p, uint, DECIMAL);
-			}
+				case 'd':
+				case 'i':
+				{
+					int32_t varint = va_arg(ap, int32_t);
+					ntos(cur_p, varint, DECIMAL);
+					break;
+				}
 
-			if (*format == 'x' || *format == 'X') {
-				int varhex = va_arg(ap, int);
-				ntos(cur_p, varhex, HEXADECIMAL);
-				ishex = 1;
-			}
+				case 'u':
+				{
+					uint32_t uint = va_arg(ap, uint32_t);
+					ntos(cur_p, uint, DECIMAL);
+					break;
+				}
 
-			if (*format == 'n') {
-				ntos(cur_p, len, DECIMAL);
-			}
+				case 'x':
+				case 'X':
+				{
+					int32_t varhex = va_arg(ap, int32_t);
+					ntos(cur_p, varhex, HEXADECIMAL);
+					break;
+				}
 
-			if (*format == '%') {
-				ConsolWriteChar('%');
+				case 'p':
+				{
+					pointer_t ptr = va_arg(ap, pointer_t);
+					ntos(cur_p, (int32_t)ptr, HEXADECIMAL);
+					break;
+				}
+
+				case 'l':
+				{
+					// need to hanadle long
+					int32_t varhex = va_arg(ap, int32_t);
+					ntos(cur_p, varhex, HEXADECIMAL);
+					break;
+				}
+
+				case 'f':
+				{
+					// need to handle float
+					break;
+				}
+
+				case 'n':
+				{
+					ntos(cur_p, len, DECIMAL);
+					break;
+				}
+
+				case '%':
+				{
+					cur_p[0] = '%';
+					cur_p[1] = '\0';
+					break;
+				}
 			}
 
 			cursize = strlen(cur_p);
 
 			/* Actually write the field width */
 			if (direction == LEFT) {
-				for(i = 1; i <= width; ++i) {
+				for(i = 0; i < width; ++i) {
 					BackSpace();
 				}
 			} else {
-				for (i = 1; i <= width; ++i) {
-					ConsolWriteChar(' ');
+				for (i = 0; i < width; ++i) {
+					Space();
 				}
 			}
 
 			/* Print the argument converted to a string */
-			if (ishex != 1) {
-				*(cur_p + cursize) = '\0';
-				ConsolWriteString(cur_p);
-			}
-			ishex = 0;
+			ConsolWriteString(cur_p);
 		} else {
 			ConsolWriteChar(*format);
 		}
 		
 		/* Update values */
 		format++;
-		direction = RIGHT;
 		width = 0;
-		len++;
-		for (i = 0; i < 255; ++i) {
-			current[i] = 0;
-		}
+		direction = RIGHT;
+		len += cursize;
 	}
 	va_end(ap); // end of arguments
 

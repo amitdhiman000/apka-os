@@ -5,6 +5,10 @@
 #define unlock sti
 
 /* prototypes */
+
+extern void enable_irq(int);
+extern void disable_irq(int);
+
 extern void enable_nmi(void);
 extern void disable_nmi(void);
 

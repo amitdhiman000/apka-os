@@ -30,7 +30,9 @@ $c_compiler $c_compiler_opts -c  -o $build/kidt.o ./kernel/kidt.c
 $c_compiler $c_compiler_opts -c  -o $build/kisrs.o ./kernel/kisrs.c
 $c_compiler $c_compiler_opts -c  -o $build/kirq.o ./kernel/kirq.c
 $c_compiler $c_compiler_opts -c  -o $build/kkbd.o ./kernel/kkbd.c
-$c_compiler $c_compiler_opts -c  -o $build/ktimer.o ./kernel/ktimer.c 
+$c_compiler $c_compiler_opts -c  -o $build/kmouse.o ./kernel/kmouse.c
+$c_compiler $c_compiler_opts -c  -o $build/kpaging.o ./kernel/kpaging.c
+$c_compiler $c_compiler_opts -c  -o $build/ktimer.o ./kernel/ktimer.c
 $c_compiler $c_compiler_opts -c  -o $build/system.o ./kernel/system.c
 
 #compile c library
@@ -48,6 +50,7 @@ $c_compiler $c_compiler_opts -c  -o $build/ktest.o ./kernel/test/ktest.c
 
 nasm -f elf ./kernel/asm/loader.asm -o $build/loader.o
 nasm -f elf ./kernel/asm/start.asm -o $build/start.o
+nasm -f elf ./kernel/asm/registers.asm -o $build/rgisters.o
 
 # link 
 $linker $linker_opts -T link.ld  $build/*.o

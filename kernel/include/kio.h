@@ -1,7 +1,9 @@
 #ifndef __KIO_H__
 #define __KIO_H__
 
-unsigned char inportb (unsigned short);
-void outportb (unsigned short, unsigned char);
+#include <ktypes.h>
 
-#endif
+extern const byte_t inportb(const uint16_t port);
+extern void outportb(const uint16_t port, const byte_t val);
+
+#endif /* __KIO_H__ */

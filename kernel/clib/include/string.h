@@ -28,26 +28,24 @@
 
 #include <stddef.h>
 
-int _kstrncmp (const char *, const char *, int);
+extern size_t strlen(const char *);
 
-extern void * memmove(void *, const void *, size_t);
+extern int strcmp(const char *, const char *);
 
-size_t strlen (const char *);
+extern int strncmp(const char *, const char *, int);
 
-int strcmp (const char *, const char *);
+extern char *strchr(register const char *, register int);
 
-int  strncmp (const char *, const char *, int);
+extern char *strstr(const char *, const char *);
 
-char *strchr (register const char *, register int);
+extern char *reverse(char *src);
 
-char *strstr (const char *, const char *);
+extern char *strncat(char *, const char *, size_t);
 
-char *strncat (char *, const char *, size_t);
+extern char *strtok (char *, const char *);
 
-char *strtok (char *, const char *);
+extern char *strcpy(char *, register const char *);
 
-char *strcpy (char *, register const char *);
-
-char *strncpy (char *, register const char *, size_t);
+extern char *strncpy(char *, register const char *, size_t);
 
 #endif /* __STRING_H__ */

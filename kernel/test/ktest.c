@@ -4,7 +4,7 @@
 
 void test_konsole(void)
 {
-    ConsolWriteString("Hello, Welcome to OS");
+    ConsolWriteString("test_konsole :: Hello, Welcome to OS");
 }
 
 void test_stdio(void)

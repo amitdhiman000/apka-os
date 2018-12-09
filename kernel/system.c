@@ -1,6 +1,11 @@
 #include <ktypes.h>
 #include <system.h>
 #include <kinterrupts.h>
+#include <kio.h>
+
+
+#define ENABLE_NMI 0x00
+#define DISABLE_NMI 0x80
 
 uint16_t ocw1 = 0xFFFF;	/* short int = 16 bits */
 
@@ -14,24 +19,24 @@ uint16_t ocw1 = 0xFFFF;	/* short int = 16 bits */
 void init_pics(int pic1, int pic2)
 {
 	/* send ICW1 */
-	out(PIC1, ICW1);
-	out(PIC2, ICW1);
+	outportb(PIC1, ICW1);
+	outportb(PIC2, ICW1);
 
 	/* send ICW2 */
-	out(PIC1 + 1, pic1);	/* remap */
-	out(PIC2 + 1, pic2);	/* pics */
+	outportb(PIC1 + 1, pic1);	/* remap */
+	outportb(PIC2 + 1, pic2);	/* pics */
 
 	/* send ICW3 */
-	out(PIC1 + 1, 4);	/* IRQ2 -> connection to slave */
-	out(PIC2 + 1, 2);
+	outportb(PIC1 + 1, 4);	/* IRQ2 -> connection to slave */
+	outportb(PIC2 + 1, 2);
 
 	/* send ICW4 */
-	out(PIC1 + 1, ICW4);
-	out(PIC2 + 1, ICW4);
+	outportb(PIC1 + 1, ICW4);
+	outportb(PIC2 + 1, ICW4);
 
 	/* disable all IRQs */
-	out(PIC1 + 1, 0xFF);
-	out(PIC2 + 1, 0xFF);
+	outportb(PIC1 + 1, 0xFF);
+	outportb(PIC2 + 1, 0xFF);
 }
 
 /* enable_irq()
@@ -45,11 +50,11 @@ void enable_irq(int irq)
 				   as they are
 				 */
 	if (irq < 8)
-		out(PIC1 + 1, ocw1&0xFF);	/* AND with 0xFF to clear the high 8 
+		outportb(PIC1 + 1, ocw1&0xFF);	/* AND with 0xFF to clear the high 8 
 					  	   bits because we send to PIC1
 						 */
 	else
-		out(PIC2 + 1, ocw1 >> 8);	/* move high 8 bits to low 8 bits
+		outportb(PIC2 + 1, ocw1 >> 8);	/* move high 8 bits to low 8 bits
 						   since we send to PIC2
 						 */
 }
@@ -64,19 +69,19 @@ void disable_irq(int irq)
 				 */
 
 	if (irq < 8)
-		out(PIC1 + 1, ocw1&0xFF);	/* AND with 0xFF to clear the
+		outportb(PIC1 + 1, ocw1&0xFF);	/* AND with 0xFF to clear the
 						   high 8 bits since we send to PIC1
 						 */
 	else
-		out(PIC2 + 1, ocw1 >> 8);	/* move high 8 bits to low 8 bits since
+		outportb(PIC2 + 1, ocw1 >> 8);	/* move high 8 bits to low 8 bits since
 						   we send to PIC2
 						 */
 }
 
 void write_nmi(byte_t nmi)
 {
-	out(0x70, nmi);
-	in(0x71);
+	outportb(0x70, nmi);
+	inportb(0x71);
 }
 
 void enable_nmi(void)
@@ -90,7 +95,15 @@ void disable_nmi(void)
 }
 
 
+void NMI_enable(void)
+{
+	outportb(0x70, inportb(0x70) & 0x7F);
+}
 
+void NMI_disable(void)
+{
+	outportb(0x70, inportb(0x70) | 0x80);
+}
 
 /**********************
  * CPU operations here
@@ -164,7 +177,7 @@ void reboot(void)
 	} while(temp & 2);
 
 	/* send the CPU reset line */
-	out(0x64, 0xFE);
+	outportb(0x64, 0xFE);
 
 	hlt();
 }

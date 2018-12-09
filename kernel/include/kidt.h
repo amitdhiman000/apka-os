@@ -22,7 +22,6 @@ typedef struct idt_ptr
 
 
 /* This exists in 'start.asm', and is used to load our IDT */
-extern void idt_load(void);
 extern void idt_install(void);
 extern void idt_set_gate(byte_t num, pointer_t base, uint16_t sel, byte_t flags);
 

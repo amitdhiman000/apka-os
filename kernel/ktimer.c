@@ -4,6 +4,7 @@
 *
 *  Notes: No warranty expressed or implied. Use at own risk. */
 #include <ktimer.h>
+#include <stdio.h>
 
 /* This will keep track of how many ticks that the system
 *  has been running for */
@@ -23,7 +24,7 @@ void timer_handler(struct regs *r)
     *  display a message on the screen */
     if (timer_ticks % 18 == 0)
     {
-        //puts("One second has passed\n");
+        puts("One second has passed\n");
     }
 }
 
@@ -39,7 +40,7 @@ void timer_wait(int ticks)
 
 /* Sets up the system clock by installing the timer handler
 *  into IRQ0 */
-void timer_install()
+void timer_install(void)
 {
     /* Installs 'timer_handler' to IRQ0 */
     irq_install_handler(0, timer_handler);

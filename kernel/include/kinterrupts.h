@@ -1,7 +1,7 @@
-
-
 #ifndef __KINTERRUPTS_H__
 #define __KINTERRUPTS_H__
+
+#include <ktypes.h>
 
 #define GATE_DEFAULT 0x8E00
 
@@ -15,10 +15,8 @@
 #define DISABLE_NMI 0x80
 
 
-
-
 #define in(port) ({ \
-		unsigned char v; \
+		byte_t v; \
 		__asm__ __volatile__ ("inb %%dx, %%al" \
 				: "=a" (v) : "d" (port)); \
 		v; \
@@ -29,33 +27,9 @@
 					"d" (port))
 
 
-
-
-
 /* prototypes */
-void put_handler(unsigned int, void *, unsigned short int);
-void init_pics(int, int);
-void enable_irq(int);
-void disable_irq(int);
-void send_eoi(int);
+void put_handler(uint32_t, pointer_t, uint16_t);
+void init_pics(int32_t, int32_t);
+void send_eoi(int32_t);
 
-/* ISR prototypes */
-void ISR00(void);
-void ISR01(void);
-void ISR03(void);
-void ISR04(void);
-void ISR05(void);
-void ISR06(void);
-void ISR07(void);
-void ISR08(void);
-void ISR09(void);
-void ISR10(void);
-void ISR11(void);
-void ISR12(void);
-void ISR13(void);
-void ISR14(void);
-void ISR16(void);
-void INT_IRQ0(void);
-void INT_IRQ1(void);
-
-#endif
+#endif /* __KINTERRUPTS_H__ */

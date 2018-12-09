@@ -39,11 +39,11 @@
 
 
 extern void putchar(const char ch);
-extern int atoi(const char * const str);
+extern int atoi(const char * str);
 extern char *gets(void);
-extern int puts(const char * const str);
-extern int printf(const char * const fmt, ...);
-extern int scanf(const char * const fmt, ...);
+extern int puts(const char * str);
+extern int printf(const char * fmt, ...);
+extern int scanf(const char * fmt, ...);
 
 
 #endif /* __STDIO_H__ */

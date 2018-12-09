@@ -1,4 +1,5 @@
 #include <kconsol.h>
+#include <kio.h>
 
 
 upoint_t ConsolCursor = {0, 0};
@@ -165,6 +166,11 @@ void Tab(void)
 	{
 		ConsolCursor.X = ConsolCursor.X + TabWidth;
 	}
+}
+
+void Space(void)
+{
+	ConsolWriteChar(' ');
 }
 
 void BackSpace(void)

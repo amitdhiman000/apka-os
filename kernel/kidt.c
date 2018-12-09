@@ -1,5 +1,7 @@
 #include <kidt.h>
 
+extern void idt_load(void);
+
 /* Declare an IDT of 256 entries. Although we will only use the
 *  first 32 entries in this tutorial, the rest exists as a bit
 *  of a trap. If any undefined IDT entry is hit, it normally

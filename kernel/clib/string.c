@@ -26,10 +26,11 @@
 #include <string.h>
 #include <stddef.h>
 
+
 /*
  * Copy n characters from src to dest, returning dest
  */
-char *strncpy (char *dest, register const char *src, register size_t n)
+char *strncpy(char *dest, register const char *src, register size_t n)
 {
     if (n != 0) {
         char *d = dest;
@@ -45,7 +46,7 @@ char *strncpy (char *dest, register const char *src, register size_t n)
     return dest;
 }
 
-char *strcpy (char *dest, const char *src)
+char *strcpy(char *dest, const char *src)
 {
 	char *save = dest;
 	for (; (*dest = *src); ++src, ++dest);
@@ -56,13 +57,17 @@ char *strcpy (char *dest, const char *src)
 /*
  * Return the number of a string's characters
  */
-size_t strlen(const char *s) 
+size_t strlen(const char *str)
 {
-	register unsigned int len = 0;
-	while (s[len] != '\0') 
-		len++;
+	if (NULL == str) {
+		return 0;
+	}
 
-	return(len);	
+	register size_t len = 0;
+	while (str[len] != '\0')
+		++len;
+
+	return (len);
 }
 
 
@@ -71,92 +76,84 @@ size_t strlen(const char *s)
  */
 int _kstrncmp(const char *s1, const char *s2, int n)
 {
-  int sn=0;
+	int sn = 0;
 
-  while (*s1 == *s2 && sn < n-1)
-  {
-    s1++;
-    s2++;
-    sn++;
-  }
+	while (*s1 == *s2 && sn < n-1)
+	{
+		s1++;
+		s2++;
+		sn++;
+	}
 
-  if (*s1 > *s2) return 1;
-  if (*s1 < *s2) return -1;
-  return 0;
+	if (*s1 > *s2) return 1;
+	if (*s1 < *s2) return -1;
+	return 0;
 }
 
-int strncmp(const char *s1, const char *s2, int n){
-	return _kstrncmp(s1,s2,n);
+int strncmp(const char *s1, const char *s2, int n)
+{
+	return _kstrncmp(s1, s2, n);
 }
 
 /*
  * Compare s1 and s2
  */
-int strcmp (const char *s1, const char *s2)
+int strcmp(const char *s1, const char *s2)
 {
-  int s1n = strlen(s1);
-  int s2n = strlen(s2);
+	int s1n = strlen(s1);
+	int s2n = strlen(s2);
 
-  if (s1n > s2n)
-    return 1;
-  else if (s1n < s2n)
-    return -1;
+	if (s1n > s2n)
+		return 1;
+	else if (s1n < s2n)
+		return -1;
 
-  while (*s1 == *s2 && s1n>=0)
-  {
-    s1++;
-    s2++;
-    s1n--;
-  }
-
-  if (s1n>0) {
-    if (*s1 > *s2) return 1;
-    else return -1;
-  }
-  return 0;
-}
-
-
-void *memmove(void * dest, const void *src, size_t count)
-{
-	register char *tmp;
-	register const char *s;
-
-	if ( count > 0 ) 
+	while (*s1 == *s2 && s1n>=0)
 	{
-		if (dest <= src) 
-		{
-			tmp = (char *) dest;
-			s = (char *) src;
-			
-			while (count--)
-				*tmp++ = *s++;
-		}
-		else 
-		{
-			tmp = (char *) dest + count;
-			s = (char *) src + count;
-			
-			while (count--)
-				*--tmp = *--s;
-		}
+		s1++;
+		s2++;
+		s1n--;
 	}
-	return dest;
+
+	if (s1n > 0) {
+		if (*s1 > *s2)
+			return 1;
+		else
+			return -1;
+	}
+	return 0;
 }
+
 
 /*
  * Duplicate a string and return the new one
  */
-char *strdup (const char *s)
+char *strdup(const char *s)
 {
     char *ret = NULL;
-    int i=0;
+    int i = 0;
 
-    for (i=0; s[i]; i++)
-	ret[i] = s[i];
+    for (i = 0; s[i]; i++)
+		ret[i] = s[i];
 
     ret[i] = '\0';
     return ret;
+}
+
+char *reverse(char * const str)
+{
+	if (NULL != str) {
+		size_t left = 0;
+		size_t right = strlen(str) - 1;
+		while (left < right) {
+			char tmp = str[left];
+			str[left] = str[right];
+			str[right] = tmp;
+            ++left;
+			--right;
+		}
+	}
+    return str;
 }
 
 /*

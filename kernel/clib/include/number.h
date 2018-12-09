@@ -1,6 +1,7 @@
 #ifndef __NUMBER_H__
 #define __NUMBER_H__
 
+#include <stddef.h>
 #include <ktypes.h>
 
 typedef enum {
@@ -11,7 +12,7 @@ typedef enum {
     HEXADECIMAL = 16,
 } numbers_base_t;
 
-extern void ntos(char * const str, int32_t num, numbers_base_t base);
+extern uint32_t ntos(char * const str, int32_t num, numbers_base_t base);
 
 
 #endif /* __NUMBER_H__ */

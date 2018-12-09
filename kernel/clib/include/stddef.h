@@ -22,8 +22,10 @@
   * Contiene le definizioni di alcuni tipi di dato :D
   */
 
-#ifndef __STDDEF__H
-#define __STDDEF__H
+#ifndef __STDDEF_H__
+#define __STDDEF_H__
+
+#include <ktypes.h>
 
 #ifndef NULL
 #define NULL ((void*)0)
@@ -37,9 +39,6 @@
 
 #define KERNEL_SIZE 0x200
 
-typedef unsigned int size_t;
-typedef unsigned long long qword;
-typedef unsigned short int ushort;
-typedef unsigned char byte;
+typedef uint32_t size_t;
 
-#endif
+#endif /* __STDDEF_H__ */

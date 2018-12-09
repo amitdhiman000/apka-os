@@ -56,10 +56,12 @@ extern void ConsolWriteString(const char *str);
 
 extern void putch(const byte_t c); // for keyboard input .
 
-extern void NextLine();
+extern void NextLine(void);
 
-extern void Tab();
+extern void Tab(void);
 
-extern void BackSpace();
+extern void Space(void);
+
+extern void BackSpace(void);
 
 #endif /* __KCONSOL_H__ */
