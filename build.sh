@@ -64,6 +64,8 @@ sudo cp kernel.bin /media/test1
 sudo umount /media/test1
 sudo rm -r /media/test1
 
+mkisofs -no-emul-boot -b boot/grub/stage1 -boot-load-seg 0x07C0 -boot-load-size 8 -iso-level 2 -udf -joliet -D -N -relaxed-filenames -o os.iso iso
+
 
 echo "====================="
 echo "..Building Finished.."
